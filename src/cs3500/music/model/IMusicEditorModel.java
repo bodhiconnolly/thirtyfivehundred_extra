@@ -102,6 +102,20 @@ public interface IMusicEditorModel {
    */
   IMusicEditorModel fromFile(String fileName) throws FileNotFoundException;
 
+  /**
+   * Add a repeat to the track.
+   * @param activationBeat
+   * @param goBackToBeat
+   */
+  void addRepeat(int activationBeat, int goBackToBeat);
+
+  /**
+   * Add an alternate ending.
+   * @param startEnd1 Start beat of the first ending.
+   * @param startEnd2 Start beat of the second ending.
+   */
+  void addAltEnd(int startEnd1, int startEnd2);
+
   //////////////////////////////
   // POTENTIAL FUTURE UPDATES //
   //////////////////////////////

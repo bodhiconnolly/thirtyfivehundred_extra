@@ -31,6 +31,9 @@ public class Track implements IMusicEditorModel {
   int lowestNote;
   int highestBeat;
   int tempo;
+  // GoToBeats that enable repeats and multiple endings
+  // Invariant: This list is always sorted by GoToBeat location from low to high.
+  private ArrayList<GoToBeat> listGoToBeats;
 
   /**
    * Construct a new track with a given measure length in the given scale.
@@ -43,6 +46,7 @@ public class Track implements IMusicEditorModel {
     this.highestNote = 0;  // 0 indicates there is no highest note yet.
     this.lowestNote = 0;   // 0 indicates there is no lowest note yet.
     this.highestBeat = -1; // -1 indicates there is no highest beat yet.
+    this.listGoToBeats = new ArrayList<GoToBeat>();
   }
 
   private static ArrayList<ANote> removeRests(ArrayList<ANote> notes) {
@@ -331,5 +335,39 @@ public class Track implements IMusicEditorModel {
     FileReader mhll = new FileReader(path);
     IMusicEditorModel model = (IMusicEditorModel) MusicReader.parseFile(mhll, cb);
     return model;
+  }
+
+  @Override
+  public void addRepeat(int activationBeat, int goBackToBeat) {
+    // Adds repeat to beginning of list
+    this.insertGoToBeat(new GoToBeat(activationBeat, goBackToBeat));
+  }
+
+  @Override
+  public void addAltEnd(int startEnd1, int startEnd2) {
+    int idxStartEnd2 = this.insertGoToBeat(new GoToBeat(startEnd2, 0));
+    if (idxStartEnd2 == 0) {
+      this.listGoToBeats.add(new GoToBeat(startEnd1, startEnd2));
+    }
+    else {
+      this.listGoToBeats.add(idxStartEnd2 + 1, new GoToBeat(startEnd1, startEnd2));
+    }
+  }
+
+  /**
+   * Insert the GoToBeat in the list so that is sorted by location (low to high).
+   * @param goToBeat The GoToBeat to be inserted
+   * @return Returns the location at which the GoToBeat was placed.
+   */
+  private int insertGoToBeat(GoToBeat goToBeat) {
+    for (int i = 0; i < listGoToBeats.size(); i++) {
+      if (goToBeat.getLocation() <= this.listGoToBeats.get(i).getLocation()) {
+        this.listGoToBeats.add(i, goToBeat);
+        return i; // Stop iterating if beat is placed and return where it was place
+      }
+    }
+    // Add the beat at the end if never placed
+    this.listGoToBeats.add(goToBeat);
+    return 0;
   }
 }

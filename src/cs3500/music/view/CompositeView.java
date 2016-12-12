@@ -4,6 +4,7 @@ import java.security.InvalidParameterException;
 import java.util.ArrayList;
 
 import cs3500.music.controller.KeyboardHandler;
+import cs3500.music.model.GoToBeat;
 
 /**
  * Represents a composite music editor view that includes both a GUI view and a MIDI view.
@@ -16,6 +17,7 @@ import cs3500.music.controller.KeyboardHandler;
 public class CompositeView implements GuiView {
   private GuiView guiView;
   private MidiViewImpl midiView;
+  private ArrayList<GoToBeat> goToBeats;
   private ArrayList<ArrayList<Note>> notes;
   private int endOfSong;
   private int curBeat; // Current position in playback of song
@@ -27,9 +29,10 @@ public class CompositeView implements GuiView {
    * @param guiView  the visual class.
    * @param midiView the midi class.
    */
-  public CompositeView(GuiView guiView, MidiViewImpl midiView) {
+  public CompositeView(GuiView guiView, MidiViewImpl midiView, ArrayList<GoToBeat> goToBeats) {
     this.guiView = guiView;
     this.midiView = midiView;
+    this.goToBeats = goToBeats;
     this.notes = new ArrayList<>();
     notes.add(new ArrayList<>());
     this.endOfSong = 0;
@@ -45,7 +48,7 @@ public class CompositeView implements GuiView {
       this.playing = true;
 
       // Play the song starting from the current beat
-      for (int i = curBeat; i < notes.size(); i++) {
+      for (int i = curBeat; i <= this.endOfSong; i++) {
 
         // If the song is not playing, sleep for a tenth of a second and check it it is playing.
         // Repeat indefinitely until the song is found to be playing. This is the pause/play
@@ -58,28 +61,43 @@ public class CompositeView implements GuiView {
           }
         }
 
-        for (int j = 0; j < notes.get(i).size(); j++) {
-          Note n = notes.get(i).get(j);
-          this.midiView.renderNote(n.rawPitch, n.volume, n.duration, n.instrument, n.beatnum);
+        if (curBeat < notes.size()) {
+          // Render notes at current beat in MIDI
+          for (int j = 0; j < notes.get(i).size(); j++) {
+            Note n = notes.get(i).get(j);
+            this.midiView.renderNote(n.rawPitch, n.volume, n.duration, n.instrument, n.beatnum);
+          }
         }
-        setBeat(curBeat);
-        curBeat = curBeat + 1;
+
+        // Check if there is a GoToBeat at this beat and move current beat if necessary
+        if (this.goToBeats.size() > 0 && this.goToBeats.get(0).getLocation() == curBeat) {
+          GoToBeat thisGoToBeat = this.goToBeats.remove(0);
+          setBeat(thisGoToBeat.getGoToBeat());
+          curBeat = thisGoToBeat.getGoToBeat();
+          i = curBeat - 1;
+        }
+        else {
+          setBeat(curBeat);
+          curBeat = curBeat + 1;
+        }
+
+        // Sleep for a beat while note plays through MIDI
         try {
           Thread.sleep(this.getTempo() / 1000);
         } catch (InterruptedException e) {
           e.printStackTrace();
         }
       }
-      // Keep advancing the red line on the gui view
-      while (curBeat <= endOfSong) {
-        setBeat(curBeat);
-        curBeat = curBeat + 1;
-        try {
-          Thread.sleep(this.getTempo() / 1000);
-        } catch (InterruptedException e) {
-          e.printStackTrace();
-        }
-      }
+//      // Keep advancing the red line on the gui view
+//      while (curBeat <= endOfSong) {
+//        setBeat(curBeat);
+//        curBeat = curBeat + 1;
+//        try {
+//          Thread.sleep(this.getTempo() / 1000);
+//        } catch (InterruptedException e) {
+//          e.printStackTrace();
+//        }
+//      }
 
     } else {
       // Update end of song if necessary

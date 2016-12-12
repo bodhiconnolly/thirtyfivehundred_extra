@@ -44,6 +44,9 @@ public class MEMain {
       // Build model
       IMusicEditorModel model = IMusicEditorModelBuilder.build(MusicEditorType.TRACK,
               new DiatonicScale(), 4).fromFile(songToPlay);
+      model.addAltEnd(44, 54);
+      model.addRepeat(16, 0);
+
 
       IMusicEditorView view;
       GuiView view2;
@@ -65,7 +68,8 @@ public class MEMain {
         case "guimidi":
           view2 = new CompositeView(new GuiViewFrame(
                   model.getHighestNote(), model.getLowestNote(), model.length(), false),
-                  new MidiViewImpl(model.getTempo()));
+                  new MidiViewImpl(model.getTempo()),
+                  model.getGoToBeats());
           controller = new GuiMidiEditorController(model, view2);
           break;
         default:

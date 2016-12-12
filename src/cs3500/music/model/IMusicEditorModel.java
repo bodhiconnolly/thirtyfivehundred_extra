@@ -116,6 +116,12 @@ public interface IMusicEditorModel {
    */
   void addAltEnd(int startEnd1, int startEnd2);
 
+  /**
+   * Get GoToBeats for this track.
+   * @return GoToBeats
+   */
+  ArrayList<GoToBeat> getGoToBeats();
+
   //////////////////////////////
   // POTENTIAL FUTURE UPDATES //
   //////////////////////////////

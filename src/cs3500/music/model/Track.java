@@ -33,7 +33,7 @@ public class Track implements IMusicEditorModel {
   int tempo;
   // GoToBeats that enable repeats and multiple endings
   // Invariant: This list is always sorted by GoToBeat location from low to high.
-  private ArrayList<GoToBeat> listGoToBeats;
+  ArrayList<GoToBeat> listGoToBeats;
 
   /**
    * Construct a new track with a given measure length in the given scale.
@@ -352,6 +352,11 @@ public class Track implements IMusicEditorModel {
     else {
       this.listGoToBeats.add(idxStartEnd2 + 1, new GoToBeat(startEnd1, startEnd2));
     }
+  }
+
+  @Override
+  public ArrayList<GoToBeat> getGoToBeats() {
+    return this.listGoToBeats;
   }
 
   /**

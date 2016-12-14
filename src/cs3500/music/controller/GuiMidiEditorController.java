@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import cs3500.music.model.ANote;
+import cs3500.music.model.GoToBeat;
 import cs3500.music.model.IMusicEditorModel;
 import cs3500.music.model.INoteType;
 import cs3500.music.view.GuiView;
@@ -43,6 +44,18 @@ public class GuiMidiEditorController implements IMusicEditorController {
                   note.getDuration(), note.getInstrument(), note.getBeat());
         }
       }
+
+      ArrayList<Integer> startRepeats = new ArrayList<>();
+      ArrayList<Integer> endRepeats = new ArrayList<>();
+      ArrayList<ArrayList<Integer>> allRepeats = new ArrayList<>();
+
+      for (GoToBeat repeat : model.getGoToBeats()){
+        startRepeats.add(repeat.getGoToBeat());
+        endRepeats.add(repeat.getLocation());
+      }
+      allRepeats.add(startRepeats);
+      allRepeats.add(endRepeats);
+      this.view.setRepeats(allRepeats);
     }
 
     // Wait for gui view to fully load

@@ -4,6 +4,7 @@ import java.awt.FlowLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Rectangle;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
@@ -62,6 +63,13 @@ public class GuiViewFrame extends JFrame implements GuiView {
     window.setVisible(true);
 
   }
+
+  @Override
+  public void setRepeats(ArrayList<ArrayList<Integer>> repeatList){
+    this.grid.setStarts(repeatList.get(0));
+    this.grid.setEnds(repeatList.get(1));
+  }
+
 
   /**
    * Render note.
@@ -163,4 +171,6 @@ public class GuiViewFrame extends JFrame implements GuiView {
   public void jumpToEnd() {
    scroll(50000);
   }
+
+
 }

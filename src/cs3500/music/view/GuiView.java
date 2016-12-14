@@ -1,5 +1,7 @@
 package cs3500.music.view;
 
+import java.util.ArrayList;
+
 import cs3500.music.controller.KeyboardHandler;
 
 /**
@@ -58,5 +60,11 @@ public interface GuiView extends IMusicEditorView {
    * Scroll to end. Added for HW8.
    */
   void jumpToEnd();
+
+  /**
+   * Give the view the list of repeats
+   * @param repeatList nested list of start and end repeats
+   */
+  void setRepeats(ArrayList<ArrayList<Integer>> repeatList);
 }
 

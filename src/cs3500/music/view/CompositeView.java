@@ -169,6 +169,12 @@ public class CompositeView implements GuiView {
   }
 
   @Override
+  public void setRepeats(ArrayList<ArrayList<Integer>> repeatList) {
+    this.guiView.setRepeats(repeatList);
+  }
+
+
+  @Override
   public void togglePlaying() {
     this.playing = !this.playing;
   }

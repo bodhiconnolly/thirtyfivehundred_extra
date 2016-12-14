@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.Color;
 import java.awt.BasicStroke;
 import java.awt.Dimension;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -25,6 +26,9 @@ class GridControl {
 
     private List<Point> fillCellsBlack;
     private List<Point> fillCellsGreen;
+
+    private List<Integer> startRepeats;
+    private List<Integer> endRepeats;
 
     private int xSize;
     private int ySize;
@@ -91,6 +95,32 @@ class GridControl {
                 * sideLength, (ySize + 2) * sideLength);
         g2.setColor(Color.BLACK);
       }
+
+      //draw start repeats
+      int lineDelta = 4;
+      for (int i = 0; i < startRepeats.size(); ++i) {
+        int beatStart = startRepeats.get(i)+1;
+        g2.setStroke(new BasicStroke(2));
+        g2.setColor(Color.BLUE);
+        g.drawLine((beatStart + 1) * sideLength, sideLength, (beatStart + 1)
+                * sideLength, (ySize + 2) * sideLength);
+        g.drawLine((beatStart + 1) * sideLength+lineDelta, sideLength, (beatStart + 1)
+                * sideLength+lineDelta, (ySize + 2) * sideLength);
+        g2.setColor(Color.BLACK);
+      }
+
+      //draw end repeats
+      for (int i = 0; i < endRepeats.size(); ++i) {
+        int beatStart = endRepeats.get(i)+1;
+        g2.setStroke(new BasicStroke(2));
+        g2.setColor(Color.CYAN);
+        g.drawLine((beatStart + 1) * sideLength, sideLength, (beatStart + 1)
+                * sideLength, (ySize + 2) * sideLength);
+        g.drawLine((beatStart + 1) * sideLength+lineDelta, sideLength, (beatStart + 1)
+                * sideLength+lineDelta, (ySize + 2) * sideLength);
+        g2.setColor(Color.BLACK);
+      }
+
       drawLabels(g);
     }
 
@@ -141,5 +171,19 @@ class GridControl {
       fillCellsGreen.clear();
     }
 
+
+    void setStarts(List<Integer> ins){
+      startRepeats = new CopyOnWriteArrayList<Integer>();
+      for (int element : ins){
+        startRepeats.add(element);
+      }
+    }
+
+    void setEnds(List<Integer> ins){
+      endRepeats = new CopyOnWriteArrayList<Integer>();
+      for (int element : ins){
+        endRepeats.add(element);
+      }
+    }
   }
 }

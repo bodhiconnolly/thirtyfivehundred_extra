@@ -21,7 +21,6 @@ import cs3500.music.controller.KeyboardHandler;
  */
 public class GuiViewFrame extends JFrame implements GuiView {
 
-  //private final JPanel displayPanel; // You may want to refine this to a subtype of JPanel
   private GridControl.Grid grid;
   private int lowestNote;
   private int height;
@@ -110,13 +109,21 @@ public class GuiViewFrame extends JFrame implements GuiView {
     JScrollBar vertical = this.scroller.getHorizontalScrollBar();
     Rectangle r = window.getBounds();
     int w = r.width;
-    int pixelsSinceScroll = grid.setBeat(num, justScrolled);
-    if (pixelsSinceScroll > w - 80) {
-      vertical.setValue(vertical.getValue() + w - 40);
-      justScrolled = true;
-    } else {
-      justScrolled = false;
+    grid.setBeat(num, justScrolled);
+    System.out.print("Beat pos: ");
+    System.out.println(num*20);
+    System.out.print("Scroll pos: ");
+    System.out.print(vertical.getValue());
+    System.out.print(" ");
+    System.out.println(vertical.getValue()+w);
+
+    if (num*20>vertical.getValue()+w-100){
+      vertical.setValue(num*20-40);
     }
+    if (num*20<vertical.getValue()){
+      vertical.setValue(num*20-40);
+    }
+
   }
 
   @Override

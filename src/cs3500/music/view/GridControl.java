@@ -96,29 +96,31 @@ class GridControl {
         g2.setColor(Color.BLACK);
       }
 
-      //draw start repeats
-      int lineDelta = 4;
-      for (int i = 0; i < startRepeats.size(); ++i) {
-        int beatStart = startRepeats.get(i)+1;
-        g2.setStroke(new BasicStroke(2));
-        g2.setColor(Color.BLUE);
-        g.drawLine((beatStart + 1) * sideLength, sideLength, (beatStart + 1)
-                * sideLength, (ySize + 2) * sideLength);
-        g.drawLine((beatStart + 1) * sideLength+lineDelta, sideLength, (beatStart + 1)
-                * sideLength+lineDelta, (ySize + 2) * sideLength);
-        g2.setColor(Color.BLACK);
-      }
+      if (startRepeats!=null){
+        //draw start repeats
+        int lineDelta = 4;
+        for (int i = 0; i < startRepeats.size(); ++i) {
+          int beatStart = startRepeats.get(i)+1;
+          g2.setStroke(new BasicStroke(2));
+          g2.setColor(Color.BLUE);
+          g.drawLine((beatStart + 1) * sideLength, sideLength, (beatStart + 1)
+                  * sideLength, (ySize + 2) * sideLength);
+          g.drawLine((beatStart + 1) * sideLength+lineDelta, sideLength, (beatStart + 1)
+                  * sideLength+lineDelta, (ySize + 2) * sideLength);
+          g2.setColor(Color.BLACK);
+        }
 
-      //draw end repeats
-      for (int i = 0; i < endRepeats.size(); ++i) {
-        int beatStart = endRepeats.get(i)+1;
-        g2.setStroke(new BasicStroke(2));
-        g2.setColor(Color.CYAN);
-        g.drawLine((beatStart + 1) * sideLength, sideLength, (beatStart + 1)
-                * sideLength, (ySize + 2) * sideLength);
-        g.drawLine((beatStart + 1) * sideLength+lineDelta, sideLength, (beatStart + 1)
-                * sideLength+lineDelta, (ySize + 2) * sideLength);
-        g2.setColor(Color.BLACK);
+        //draw end repeats
+        for (int i = 0; i < endRepeats.size(); ++i) {
+          int beatStart = endRepeats.get(i)+1;
+          g2.setStroke(new BasicStroke(2));
+          g2.setColor(Color.CYAN);
+          g.drawLine((beatStart + 1) * sideLength, sideLength, (beatStart + 1)
+                  * sideLength, (ySize + 2) * sideLength);
+          g.drawLine((beatStart + 1) * sideLength+lineDelta, sideLength, (beatStart + 1)
+                  * sideLength+lineDelta, (ySize + 2) * sideLength);
+          g2.setColor(Color.BLACK);
+        }
       }
 
       drawLabels(g);

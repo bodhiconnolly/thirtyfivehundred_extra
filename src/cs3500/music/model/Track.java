@@ -340,18 +340,30 @@ public class Track implements IMusicEditorModel {
   @Override
   public void addRepeat(int activationBeat, int goBackToBeat) {
     // Adds repeat to beginning of list
-    this.insertGoToBeat(new GoToBeat(activationBeat, goBackToBeat));
+    this.insertGoToBeat(new GoToBeat(activationBeat, goBackToBeat, 0));
   }
 
   @Override
   public void addAltEnd(int startEnd1, int startEnd2) {
-    int idxStartEnd2 = this.insertGoToBeat(new GoToBeat(startEnd2, 0));
+    int endNum = this.countEnds();
+    int idxStartEnd2 = this.insertGoToBeat(new GoToBeat(startEnd2, 0, endNum));
     if (idxStartEnd2 == 0) {
-      this.listGoToBeats.add(new GoToBeat(startEnd1, startEnd2));
+      this.listGoToBeats.add(new GoToBeat(startEnd1, startEnd2, endNum));
     }
     else {
-      this.listGoToBeats.add(idxStartEnd2 + 1, new GoToBeat(startEnd1, startEnd2));
+      this.listGoToBeats.add(idxStartEnd2 + 1, new GoToBeat(startEnd1, startEnd2, endNum));
     }
+  }
+
+  private int countEnds() {
+    int endNum = 0;
+    for (GoToBeat g : this.listGoToBeats) {
+      if (g.getEndingNum() > 0) {
+        endNum += 1;
+      }
+    }
+    endNum = endNum / 2;
+    return endNum;
   }
 
   @Override

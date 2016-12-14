@@ -366,7 +366,7 @@ public class Track implements IMusicEditorModel {
         endNum += 1;
       }
     }
-    endNum = endNum / 2;
+    endNum = (endNum / 2) + 1;
     return endNum;
   }
 

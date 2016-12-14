@@ -355,6 +355,10 @@ public class Track implements IMusicEditorModel {
     }
   }
 
+  /**
+   * Count the number of alternate ends in this track.
+   * @return the number of ends
+   */
   private int countEnds() {
     int endNum = 0;
     for (GoToBeat g : this.listGoToBeats) {

@@ -46,15 +46,18 @@ public class GuiMidiEditorController implements IMusicEditorController {
       }
 
       ArrayList<Integer> startRepeats = new ArrayList<>();
+      ArrayList<Integer> repeatNums = new ArrayList<>();
       ArrayList<Integer> endRepeats = new ArrayList<>();
       ArrayList<ArrayList<Integer>> allRepeats = new ArrayList<>();
 
       for (GoToBeat repeat : model.getGoToBeats()){
         startRepeats.add(repeat.getGoToBeat());
         endRepeats.add(repeat.getLocation());
+        repeatNums.add(repeat.getEndingNum());
       }
       allRepeats.add(startRepeats);
       allRepeats.add(endRepeats);
+      allRepeats.add(repeatNums);
       this.view.setRepeats(allRepeats);
     }
 

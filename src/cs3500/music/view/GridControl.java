@@ -29,6 +29,8 @@ class GridControl {
 
     private List<Integer> startRepeats;
     private List<Integer> endRepeats;
+    private List<Integer> repeatNums;
+
 
     private int xSize;
     private int ySize;
@@ -120,6 +122,9 @@ class GridControl {
           g.drawLine((beatStart + 1) * sideLength+lineDelta, sideLength, (beatStart + 1)
                   * sideLength+lineDelta, (ySize + 2) * sideLength);
           g2.setColor(Color.BLACK);
+          if (repeatNums.get(i)!=0){
+            drawEndings(g, beatStart-1, repeatNums.get(i));
+          }
         }
       }
 
@@ -140,6 +145,13 @@ class GridControl {
                         + Integer.toString((lowestNote + j) / 12 - 1)),
                 0, (int) (sideLength * (i + 1.7)));
       }
+    }
+
+    private void drawEndings(Graphics g, Integer beatNum, Integer label) {
+      g.setColor(Color.cyan);
+         g.drawString(Integer.toString(label),
+                  (beatNum + 2) * sideLength, sideLength * 3 / 4);
+      g.setColor(Color.black);
     }
 
     void fillCell(int x, int y, Color c) {
@@ -181,10 +193,15 @@ class GridControl {
       }
     }
 
-    void setEnds(List<Integer> ins){
+    void setEnds(List<Integer> ins, List<Integer> nums){
       endRepeats = new CopyOnWriteArrayList<Integer>();
+      repeatNums = new CopyOnWriteArrayList<Integer>();
       for (int element : ins){
         endRepeats.add(element);
+      }
+      for (int element : nums){
+        repeatNums.add(element);
+
       }
     }
   }

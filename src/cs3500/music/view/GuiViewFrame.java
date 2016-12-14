@@ -66,7 +66,7 @@ public class GuiViewFrame extends JFrame implements GuiView {
   @Override
   public void setRepeats(ArrayList<ArrayList<Integer>> repeatList){
     this.grid.setStarts(repeatList.get(0));
-    this.grid.setEnds(repeatList.get(1));
+    this.grid.setEnds(repeatList.get(1), repeatList.get(2));
   }
 
 
@@ -110,12 +110,12 @@ public class GuiViewFrame extends JFrame implements GuiView {
     Rectangle r = window.getBounds();
     int w = r.width;
     grid.setBeat(num, justScrolled);
-    System.out.print("Beat pos: ");
-    System.out.println(num*20);
-    System.out.print("Scroll pos: ");
-    System.out.print(vertical.getValue());
-    System.out.print(" ");
-    System.out.println(vertical.getValue()+w);
+//    System.out.print("Beat pos: ");
+//    System.out.println(num*20);
+//    System.out.print("Scroll pos: ");
+//    System.out.print(vertical.getValue());
+//    System.out.print(" ");
+//    System.out.println(vertical.getValue()+w);
 
     if (num*20>vertical.getValue()+w-100){
       vertical.setValue(num*20-40);

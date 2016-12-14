@@ -148,10 +148,10 @@ class GridControl {
     }
 
     private void drawEndings(Graphics g, Integer beatNum, Integer label) {
-      g.setColor(Color.cyan);
+      g.setColor(Color.BLACK);
          g.drawString(Integer.toString(label),
                   (beatNum + 2) * sideLength, sideLength * 3 / 4);
-      g.setColor(Color.black);
+      g.setColor(Color.BLACK);
     }
 
     void fillCell(int x, int y, Color c) {

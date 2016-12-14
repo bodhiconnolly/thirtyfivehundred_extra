@@ -346,7 +346,7 @@ public class Track implements IMusicEditorModel {
   @Override
   public void addAltEnd(int startEnd1, int startEnd2) {
     int endNum = this.countEnds();
-    int idxStartEnd2 = this.insertGoToBeat(new GoToBeat(startEnd2, 0, endNum));
+    int idxStartEnd2 = this.insertGoToBeat(new GoToBeat(startEnd2, 0, endNum + 1));
     if (idxStartEnd2 == 0) {
       this.listGoToBeats.add(new GoToBeat(startEnd1, startEnd2, endNum));
     }

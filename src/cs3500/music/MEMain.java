@@ -44,6 +44,12 @@ public class MEMain {
       // Build model
       IMusicEditorModel model = IMusicEditorModelBuilder.build(MusicEditorType.TRACK,
               new DiatonicScale(), 4).fromFile(songToPlay);
+//      for (int i = 2; i < args.length; i++) {
+//        Scanner scanner = new Scanner(args[i]);
+//        String goToType = scanner.next();
+//
+//      }
+
       model.addAltEnd(44, 54);
       model.addRepeat(16, 0);
 

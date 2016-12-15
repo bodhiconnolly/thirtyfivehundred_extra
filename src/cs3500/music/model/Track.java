@@ -337,14 +337,19 @@ public class Track implements IMusicEditorModel {
 
   @Override
   public void addRepeat(int activationBeat, int goBackToBeat) {
-    // Adds repeat to beginning of list
+    // Insert GoToBeat into list
     this.insertGoToBeat(new GoToBeat(activationBeat, goBackToBeat, 0));
   }
 
   @Override
   public void addAltEnd(int startEnd1, int startEnd2) {
-    int endNum = this.countEnds();
+    int endNum = this.countEnds(); // Count the number of existing ends
+    // Insert a GoToBeat into list that tells song to go back to beginning
+    // insertGoToBeat returns the index it was placed at
     int idxStartEnd2 = this.insertGoToBeat(new GoToBeat(startEnd2, 0, endNum + 1));
+    // Place a GoToBeat that skips the first ending after it has been played
+    // Places it at the index of the first ending + 1 so that it doesn't get activated the first
+    // time through the song.
     if (idxStartEnd2 == 0) {
       this.listGoToBeats.add(new GoToBeat(startEnd1, startEnd2, endNum));
     }

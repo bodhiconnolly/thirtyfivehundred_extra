@@ -71,10 +71,10 @@ public class CompositeView implements GuiView {
 
         // Check if there is a GoToBeat at this beat and move current beat if necessary
         if (this.goToBeats.size() > 0 && this.goToBeats.get(0).getLocation() == curBeat) {
-          GoToBeat thisGoToBeat = this.goToBeats.remove(0);
-          setBeat(thisGoToBeat.getGoToBeat());
-          curBeat = thisGoToBeat.getGoToBeat();
-          i = curBeat - 1;
+          GoToBeat thisGoToBeat = this.goToBeats.remove(0); // Remove GoToBeat
+          setBeat(thisGoToBeat.getGoToBeat()); // Tell GUI view that the beat changed
+          curBeat = thisGoToBeat.getGoToBeat(); // Change beat
+          i = curBeat - 1; // Update i (so the loop runs for long enough)
         }
         else {
           setBeat(curBeat);

@@ -104,8 +104,8 @@ public interface IMusicEditorModel {
 
   /**
    * Add a repeat to the track.
-   * @param activationBeat
-   * @param goBackToBeat
+   * @param activationBeat the beat the repeat is activated at
+   * @param goBackToBeat the beat the repeats points to
    */
   void addRepeat(int activationBeat, int goBackToBeat);
 

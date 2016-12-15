@@ -9,8 +9,6 @@ import cs3500.music.util.CompositionBuilder;
 import cs3500.music.util.CompositionBuilderImpl;
 import cs3500.music.util.MusicReader;
 
-// TODO: Support overlapping.
-
 /**
  * Represent a track.
  * Models a song as a collection of notes (containing pitch, base interval (ex. octave),
